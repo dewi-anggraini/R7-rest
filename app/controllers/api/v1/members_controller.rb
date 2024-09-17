@@ -13,7 +13,7 @@ class Api::V1::MembersController < ApplicationController
     # GET /members/:id
     def show
       if check_access
-        render json: @member, status: 201 # your code goes here
+        render json: @member, status: 200 # your code goes here
       end
     end
   
@@ -36,7 +36,7 @@ class Api::V1::MembersController < ApplicationController
         @member.update(member_params)
         if @member.save
           # your code goes here
-          render json: { message: "Member successfully updated: #{@member.errors.full_messages.to_sentence}"}, status: 201
+          render json: { message: "Member successfully updated: #{@member.errors.full_messages.to_sentence}"}, status: 200
         else 
           render json: { error: "Failed to update member: #{@member.errors.full_messages.to_sentence}"}, status: 400
         end

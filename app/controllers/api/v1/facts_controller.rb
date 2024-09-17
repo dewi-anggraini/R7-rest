@@ -30,18 +30,21 @@ class Api::V1::FactsController < ApplicationController
   
     # PUT /members/:member_id/facts/:id
     def update
-      @fact.update(fact_params)
-      if @fact.save
-        render json: { message: "fact record id:#{params[:id]} updated"}, status: 200
+      if @fact.update(fact_params)
+          render json: { message: "fact record id:#{params[:id]} updated"}, status: 200
       else
-        render json: { error: "Unable to update fact: #{@fact.errors.full_messages.to_sentence}"}, status: 400
+          render json: { error: "Unable to update fact: #{@fact.errors.full_messages.to_sentence}"}, status: 400
       end
     end
 
     # DELETE /members/:member_id/facts/:id
     def destroy
-      @fact.destroy # your code goes here
-        render json: { message: "fact record id:#{params[:id]} deleted"}, status: 200
+      @fact = Fact.find(params[:id])
+        if @fact.destroy # your code goes here
+          render json: { message: "fact record id:#{params[:id]} deleted"}, status: 200
+        else
+          render json: { error: "Unable to delete fact record id:#{params[:id]}"}, status: unprocessable_entity 
+      end
     end
   
     private
